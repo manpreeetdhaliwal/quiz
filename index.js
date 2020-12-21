@@ -17,47 +17,38 @@ app.use(methodOverride((req, res) => {
       return method;
     }
   }))
-
-  app.get('/welcome', (request, response) => {
-    // response.send('Hello');
-    // .render() use to render out a template a template at "/views/<template_name>"
-    const ONE_DAY = 1000*60*60*24;
-    response.cookie('welcome', 'world',{maxAge:ONE_DAY})
-    response.render('welcome'); // express will look for a view/template at /views/welcome
-  })
-
+//   app.use((req,res,next)=>{
+//     console.log('🍪:',req.cookies );
+//     const username= req.cookies.username;
+//     res.locals.username='';
+//     if(username){
+//       res.locals.username=username
+//       console.log(`signed in as ${username}`);
+//     }
+//     next();//next is func that tells express to move on next middleware
+//   })
   app.use(cookieParser());
   app.use(logger('dev')); 
 
-  app.use((req,res,next)=>{
-    console.log('🍪:',req.cookies );
-    const username= req.cookies.username;
-    res.locals.username='';
-    if(username){
-      res.locals.username=username
-      console.log(`signed in as ${username}`);
-    }
-    next();//next is func that tells express to move on next middleware
-  })
+//   app.get('/welcome', (request, response) => {
+//     // response.send('Hello');
+//     // .render() use to render out a template a template at "/views/<template_name>"
+//     const ONE_DAY = 1000*60*60*24;
+//     response.cookie('hello', 'world',{maxAge:ONE_DAY})
+//     response.render('welcome'); // express will look for a view/template at /views/welcome
+//   })
+
+//   app.post('/sign_in',(req,res)=> {
+//     res.send(req.body);
+//     //const COOKIE_EXPIRE= 1000*60*60*24*7;
+//     //const username=req.body.username;
+//     //res.cookie('username',username,{maxAge :COOKIE_EXPIRE});
+//     //res.redirect('/welcome');
+//   });
 
 
-  app.post('/sign_in',(req,res)=> {
-    //res.send(req.body);
-    const COOKIE_EXPIRE= 1000*60*60*24*7;
-    const username=req.body.username;
-    res.cookie('username',username,{maxAge :COOKIE_EXPIRE});
-    res.redirect('/welcome');
-  });
-
-  app.post('/sign_out',(req,res)=> {
-    res.clearCookie('username');
-    res.redirect('/welcome')
-  });
-
-
-
-
-
+  const clucksRouter = require('./routes/clucks');
+  app.use('/clucks', clucksRouter);
 
 
 

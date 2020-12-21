@@ -1,0 +1,67 @@
+ app.get('/welcome', (request, response) => {
+    // response.send('Hello');
+    // .render() use to render out a template a template at "/views/<template_name>"
+    const ONE_DAY = 1000*60*60*24;
+    response.cookie('welcome', 'world',{maxAge:ONE_DAY})
+    response.render('welcome'); // express will look for a view/template at /views/welcome
+  })
+
+  app.use(cookieParser());
+  app.use(logger('dev')); 
+
+  app.use((req,res,next)=>{
+    console.log('🍪:',req.cookies );
+    const username= req.cookies.username;
+    res.locals.username='';
+    if(username){
+      res.locals.username=username
+      console.log(`signed in as ${username}`);
+    }
+    next();//next is func that tells express to move on next middleware
+  })
+
+
+  app.post('/sign_in',(req,res)=> {
+    //res.send(req.body);
+    const COOKIE_EXPIRE= 1000*60*60*24*7;
+    const username=req.body.username;
+    res.cookie('username',username,{maxAge :COOKIE_EXPIRE});
+    res.redirect('/welcome');
+  });
+
+  app.post('/sign_out',(req,res)=> {
+    res.clearCookie('username');
+    res.redirect('/welcome')
+  });
+
+
+router.post('/',(request,response)=>{
+    knex('clucks')
+    .insert({
+      username: request.body.username,
+      //content: request.body.content,
+      //image_url: request.body.image_url
+      
+    })
+    .returning('*')
+    .then(clucks=> {
+       
+        const cluck = clucks[0];
+       response.send(cluck);
+        response.redirect(`/clucks/details`)
+    });
+});
+
+
+<div>
+
+    <% if (cluck.image_url) { %>
+        <img
+          class='card-img-top'
+          src='<%= cluck.image_url %>'
+          alt='cluck image'
+        >
+      <% } %>
+</div>
+
+ 

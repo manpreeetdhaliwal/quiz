@@ -1,0 +1,18 @@
+<h1>clucks index page</h1>
+
+<% clucks.forEach((cluck)=> { %>
+    <div><p>username: <%= cluck.username %> </p></div>
+    <div><em>posted at <%= cluck.created_at %> </em></div>
+    <div> 
+        <img src=
+        <%= cluck.image_url %> 
+        height ="30px" width="30px"
+        >
+    </div>
+<div> <%= cluck.content %> </div>
+</br>
+
+
+<% }) %>
+   
+
