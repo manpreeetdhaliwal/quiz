@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
   router.post('/',(request,response)=>{
     knex('clucks')
     .insert({
-     username: request.body.username,
+     username: request.cookies.username,
       content: request.body.content,
       image_url: request.body.image_url
       
@@ -38,9 +38,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/details', (req, res) => {
-    knex('clucks')
+    knex
+    .select('username')
+    .from('clucks')
       .orderBy('created_at', 'desc')
       .then(clucks => {
+          const cluck=clucks[0]
         res.render('clucks/details', { clucks: clucks });
       });
   });

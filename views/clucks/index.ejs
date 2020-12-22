@@ -1,6 +1,7 @@
 <h1>clucks index page</h1>
 
 <% clucks.forEach((cluck)=> { %>
+    <div style="border: 2px solid black"></div>
     <div><p>username: <%= cluck.username %> </p></div>
     <div><em>posted at <%= cluck.created_at %> </em></div>
     <div> 
@@ -11,7 +12,7 @@
     </div>
 <div> <%= cluck.content %> </div>
 </br>
-
+</div>
 
 <% }) %>
    

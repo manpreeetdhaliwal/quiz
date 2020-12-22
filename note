@@ -64,4 +64,20 @@ router.post('/',(request,response)=>{
       <% } %>
 </div>
 
- 
+router.get('/details', (req, res) => {
+    knex
+    .select('username')
+    .from('clucks')
+      .orderBy('created_at', 'desc')
+      .then(clucks => {
+        res.render('clucks/details', { clucks: clucks });
+      });
+  });
+
+  <%
+        if(cluck.username){
+            %>
+        username: <%= cluck.username %>
+    <%   
+    }
+        %>
