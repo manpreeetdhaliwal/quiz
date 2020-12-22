@@ -1,15 +1,29 @@
 <h1>clucks index page</h1>
+<nav>
 
+    <div style="border: 2px solid black">
+        <img src="https://image.freepik.com/free-vector/colorful-realistic-rooster_1284-10245.jpg" height="20px" width="20px" alt="image">
+
+       </div> 
+
+</nav>
 <% clucks.forEach((cluck)=> { %>
     <div style="border: 2px solid black"></div>
+   
+   
+   
+      
     <div><p>username: <%= cluck.username %> </p></div>
-    <div><em>posted at <%= cluck.created_at %> </em></div>
+    <p>
+        <em>Posted at <%= new Date(cluck.created_at).toLocaleString() %></em>
+          </p>
     <div> 
         <img src=
         <%= cluck.image_url %> 
         height ="30px" width="30px"
         >
     </div>
+   
 <div> <%= cluck.content %> </div>
 </br>
 </div>
